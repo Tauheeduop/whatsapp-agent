@@ -1,0 +1,165 @@
+{
+  "name": "whatsapp connection",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": [
+            "all"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -96
+      ],
+      "id": "110d9a51-faae-48d9-9254-e953f3ead15f",
+      "name": "WhatsApp Trigger",
+      "webhookId": "e9a8bf4a-3b2b-472b-9bca-06ad8f353f1b",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "retryOnFail": false,
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "odbKfTp6HMuS2t2k",
+          "name": "WhatsApp OAuth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Hello\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -96,
+        -144
+      ],
+      "id": "ea1c752e-cc31-413e-b300-f362b306ea2f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        80
+      ],
+      "id": "27dd9bc3-7a34-47bf-860c-e1bfdc1ec45a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "jdg2i9XSHYR049gQ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -80,
+        96
+      ],
+      "id": "a16fb19b-7c18-434b-aa7a-c2afe995008f",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "722967117574524",
+        "recipientPhoneNumber": "+92310 9835824",
+        "textBody": "I am tauheed ahmad shah",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        256,
+        -144
+      ],
+      "id": "048a97d9-3d76-4237-b082-35cdafe86dfa",
+      "name": "Send message",
+      "webhookId": "0839fdbf-59b1-4dd4-b672-e18b34293ffe",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "retryOnFail": false,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "23OpKXtdZ8RrJmML",
+          "name": "WhatsApp account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c59522b7-5d52-405b-ac1c-4e62437d86e5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c93bef363bd74208697c5853dbcd66ac2aa485395cd07911deafe2a0f7442304"
+  },
+  "id": "kfXYttYODRBADH1I",
+  "tags": []
+}
